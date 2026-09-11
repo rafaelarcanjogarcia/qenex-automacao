@@ -99,10 +99,10 @@ document.querySelectorAll('.scroll-animate').forEach(element => {
 // Smooth scroll behavior
 document.documentElement.style.scrollBehavior = 'smooth';
 
-// Base de dados detalhada dos produtos do catálogo
+// Base de dados detalhada dos produtos do catálogo (com ícones SVG)
 const productsData = {
     iluminacao: {
-        icon: '💡',
+        icon: `<svg class="svg-icon-lg" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>`,
         title: 'Iluminação Inteligente',
         description: 'Transforme a atmosfera de cada ambiente da sua casa com cenas luminosas personalizadas, regulagem de intensidade (dimmer), temporização inteligente e integração com assistentes de voz.',
         features: [
@@ -121,7 +121,7 @@ const productsData = {
         whatsappMessage: 'Olá! Gostaria de saber mais informações e solicitar um orçamento para o sistema de Iluminação Inteligente.'
     },
     climatizacao: {
-        icon: '❄️',
+        icon: `<svg class="svg-icon-lg" viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>`,
         title: 'Climatização Inteligente',
         description: 'Mantenha cada cômodo da sua casa na temperatura ideal automaticamente. Controle aparelhos de ar-condicionado, aquecedores e ventiladores remotamente antes mesmo de chegar em casa.',
         features: [
@@ -140,7 +140,7 @@ const productsData = {
         whatsappMessage: 'Olá! Gostaria de mais detalhes e um orçamento para o sistema de Climatização Inteligente.'
     },
     seguranca: {
-        icon: '🔐',
+        icon: `<svg class="svg-icon-lg" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
         title: 'Segurança & Controle de Acesso',
         description: 'Proteção 24h com monitoramento inteligente em tempo real. Receba alertas de invasão, acesse câmeras de alta definição e libere o acesso da sua casa de qualquer lugar do mundo.',
         features: [
@@ -159,7 +159,7 @@ const productsData = {
         whatsappMessage: 'Olá! Gostaria de consultar valores para o sistema de Segurança e Controle de Acesso QENEX.'
     },
     persianas: {
-        icon: '🪟',
+        icon: `<svg class="svg-icon-lg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/></svg>`,
         title: 'Persianas & Cortinas Motorizadas',
         description: 'Combine praticidade, privacidade e economia de energia controlando o fechamento das cortinas pelo celular, comando de voz ou programações automáticas de acordo com o sol.',
         features: [
@@ -178,7 +178,7 @@ const productsData = {
         whatsappMessage: 'Olá! Quero saber mais e fazer um orçamento para Persianas e Cortinas Motorizadas.'
     },
     audio: {
-        icon: '🎵',
+        icon: `<svg class="svg-icon-lg" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`,
         title: 'Áudio Multiambiente',
         description: 'Tenha som de altíssima fidelidade distribuído por toda a casa. Ouça suas playlists favoritas no Spotify ou Apple Music em qualquer cômodo com controles de volume independentes.',
         features: [
@@ -197,7 +197,7 @@ const productsData = {
         whatsappMessage: 'Olá! Gostaria de mais informações sobre o projeto de Áudio Multiambiente para minha residência.'
     },
     energia: {
-        icon: '⚡',
+        icon: `<svg class="svg-icon-lg" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
         title: 'Gestão Inteligente de Energia',
         description: 'Monitore o consumo elétrico da sua casa em tempo real por circuito, elimine gastos fantasmas e proteja seus equipamentos eletrônicos contra picos de tensão.',
         features: [
@@ -233,13 +233,14 @@ function openProductModal(productId) {
     if (!backdrop || !modalTitle) return;
 
     // Atualiza cabeçalho e descrição
-    modalIcon.textContent = product.icon;
+    modalIcon.innerHTML = product.icon;
     modalTitle.textContent = product.title;
     modalDescription.textContent = product.description;
 
-    // Preenche lista de recursos
+    // Preenche lista de recursos com ícone SVG
+    const checkIcon = `<svg class="svg-icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`;
     modalFeatures.innerHTML = product.features
-        .map(feature => `<li>${feature}</li>`)
+        .map(feature => `<li>${checkIcon} ${feature}</li>`)
         .join('');
 
     // Preenche especificações técnicas
@@ -253,7 +254,9 @@ function openProductModal(productId) {
 
     // Configura botão WhatsApp com mensagem pré-preenchida
     const encodedMessage = encodeURIComponent(product.whatsappMessage);
+    const waIcon = `<svg class="svg-icon-sm" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`;
     modalWhatsappBtn.href = `https://wa.me/5519993413790?text=${encodedMessage}`;
+    modalWhatsappBtn.innerHTML = `${waIcon} Consultar via WhatsApp`;
 
     // Exibe o modal
     backdrop.classList.add('active');
